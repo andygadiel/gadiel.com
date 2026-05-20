@@ -1,81 +1,293 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Gadiel.com</title>
-  <meta property="og:image" content="https://gadiel.com/hp_images/gadiel_preview.png" />
-  <!-- Global site tag (gtag.js) - Google Analytics -->
+<meta charset="utf-8">
+<title>Andy Gadiel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Andy Gadiel. Live music, side projects, and the people I build with.">
+<meta property="og:title" content="Andy Gadiel">
+<meta property="og:description" content="Live music, side projects, and the people I build with.">
+<meta property="og:image" content="https://gadiel.com/hp_images/gadiel_preview.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Encode+Sans:wght@100..900&family=Encode+Sans+Semi+Condensed:wght@100..900&display=swap" rel="stylesheet">
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-42356486-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'UA-42356486-1');
 </script>
 
-<meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
-body, html {
-  height: 100%;
-  margin: 0;
+:root {
+  --jb-grape-jam: #1C006C;
+  --jb-orange-marmalade: #F47B1C;
+  --jb-blueberry-jam: #3800D7;
+  --jb-sonic-sunrise: #FFD12E;
+  --jb-electric-daytime: #0094FF;
+  --jb-salmon-sunset: #EC5759;
+  --jb-purple-75: #493389;
+  --jb-purple-25: #D7CCF7;
+  --jb-purple-10: #F5F2FD;
+
+  --jb-font-sans: 'Encode Sans', system-ui, -apple-system, sans-serif;
+  --jb-font-heading: 'Encode Sans Semi Condensed', 'Encode Sans', system-ui, sans-serif;
+
+  --jb-radius-md: 0.5rem;
+  --jb-radius-lg: 0.75rem;
+  --jb-radius-full: 9999px;
 }
 
-.bg { background-image: url("hp_images/golden_gate.jpg"); height: 100%; background-position: center; background-repeat: no-repeat;  background-size: cover;
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--jb-font-sans);
+  font-weight: 400;
+  color: #fff;
+  background: var(--jb-grape-jam);
+  min-height: 100vh;
+  letter-spacing: 0.01em;
+  line-height: 1.5;
+  overflow-x: hidden;
 }
-.caption {  position: absolute; left: 0; top: 50%; width: 100%; text-align: center; color: #000; }
-.caption span.border { background-color: #111; color: #fff; padding: 18px; font-size: 25px; letter-spacing: 10px; font-family: Lucida Console; border-radius: 10px; }
-.caption a { text-decoration: none; color:#fff; }
 
-.links { position: absolute; left: 0; bottom: 15%; text-align: center; color: #fff; margin: 0 auto; width: 100%; }
-.links a { padding:5px; border: dotted thin #ccc; text-decoration:none; background-color:#fff; color:#000; }
-.links a:hover { background-color:#000; color:#fff; }
+.page {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.5rem, 4vw, 3rem) clamp(1.25rem, 5vw, 4rem);
+  isolation: isolate;
+}
 
-.socials { position: absolute; left: 0; bottom: 10%; width: 100%; text-align: center; color: #fff; }
-.socials a { padding: 10px; border: solid thin #ccc; font-size: 10pt; text-decoration:none; background-color:#000; color:#fff; font-family: Verdana; }
-.socials a:hover { background-color:#fff; color:#000; }
+.page::before,
+.page::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.55;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.page::before {
+  width: 60vmin; height: 60vmin;
+  background: var(--jb-blueberry-jam);
+  top: -15vmin; right: -10vmin;
+}
+
+.page::after {
+  width: 50vmin; height: 50vmin;
+  background: var(--jb-orange-marmalade);
+  bottom: -15vmin; left: -10vmin;
+  opacity: 0.45;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: clamp(3rem, 10vh, 6rem);
+}
+
+.brand {
+  font-family: var(--jb-font-heading);
+  font-weight: 800;
+  font-size: 1.125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.brand .dot {
+  display: inline-block;
+  width: 0.5rem; height: 0.5rem;
+  background: var(--jb-sonic-sunrise);
+  border-radius: var(--jb-radius-full);
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.overline {
+  font-family: var(--jb-font-heading);
+  font-weight: 600;
+  font-size: 0.875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--jb-sonic-sunrise);
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1100px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.hero h1 {
+  font-family: var(--jb-font-heading);
+  font-weight: 800;
+  font-size: clamp(3rem, 11vw, 7.5rem);
+  line-height: 0.95;
+  letter-spacing: 0.01em;
+  margin: 0.75rem 0 1.25rem;
+}
+
+.hero h1 .mark {
+  color: var(--jb-orange-marmalade);
+}
+
+.hero p.lede {
+  font-size: clamp(1.125rem, 1.6vw, 1.375rem);
+  max-width: 36ch;
+  color: var(--jb-purple-25);
+  margin: 0 0 2.5rem;
+}
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  margin-top: 1rem;
+}
+
+.group {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(215, 204, 247, 0.18);
+  border-radius: var(--jb-radius-lg);
+  padding: 1.25rem 1.25rem 1rem;
+  backdrop-filter: blur(6px);
+}
+
+.group h2 {
+  font-family: var(--jb-font-heading);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--jb-sonic-sunrise);
+  margin: 0 0 0.875rem;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  font-family: var(--jb-font-sans);
+  font-weight: 500;
+  font-size: 0.9375rem;
+  color: #fff;
+  text-decoration: none;
+  background: var(--jb-blueberry-jam);
+  border-radius: var(--jb-radius-full);
+  transition: background 120ms ease, transform 120ms ease, color 120ms ease;
+}
+
+.chip:hover {
+  background: var(--jb-sonic-sunrise);
+  color: var(--jb-grape-jam);
+  transform: translateY(-1px);
+}
+
+.chip.accent { background: var(--jb-orange-marmalade); }
+.chip.accent:hover { background: var(--jb-sonic-sunrise); color: var(--jb-grape-jam); }
+
+footer {
+  margin-top: clamp(3rem, 8vh, 5rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(215, 204, 247, 0.18);
+  font-size: 0.8125rem;
+  color: var(--jb-purple-25);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+footer a {
+  color: var(--jb-sonic-sunrise);
+  text-decoration: none;
+}
+footer a:hover { text-decoration: underline; }
+
+@media (max-width: 480px) {
+  header { margin-bottom: 2rem; }
+  .hero p.lede { margin-bottom: 1.75rem; }
+}
 </style>
 </head>
 <body>
+<div class="page">
+  <header>
+    <div class="brand"><span class="dot"></span>GADIEL.COM</div>
+    <div class="overline">Since 1999</div>
+  </header>
 
-<div class="bg">
-  <div class="caption">
-    <span class="border">GADIEL.COM</span><br><br>
-  </div>
+  <main>
+    <section class="hero">
+      <div class="overline">Andy Gadiel</div>
+      <h1>Go see<br>live music<span class="mark">.</span></h1>
+      <p class="lede">Builder, fan, and lifer. A short list of the people, projects, and places worth your click.</p>
+    </section>
+
+    <section class="groups" aria-label="Links">
+      <div class="group">
+        <h2>Find me</h2>
+        <div class="chips">
+          <a class="chip" href="https://www.linkedin.com/in/andygadiel/">LinkedIn</a>
+          <a class="chip" href="https://twitter.com/andygadiel">Twitter</a>
+          <a class="chip" href="https://instagram.com/andygadiel">Instagram</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>Side projects</h2>
+        <div class="chips">
+          <a class="chip" href="https://golive.ly">Lively</a>
+          <a class="chip" href="https://couchtour.tv">Couchtour.tv</a>
+          <a class="chip" href="https://percybot.com">PercyBot</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>Causes</h2>
+        <div class="chips">
+          <a class="chip accent" href="https://headcount.org">HeadCount</a>
+          <a class="chip accent" href="https://rexfoundation.org">Rex Foundation</a>
+        </div>
+      </div>
+
+      <div class="group">
+        <h2>Music</h2>
+        <div class="chips">
+          <a class="chip" href="https://www.jambase.com">JamBase</a>
+          <a class="chip" href="phish/">Phish</a>
+          <a class="chip" href="kvhw">KVHW</a>
+          <a class="chip" href="https://tealeafgreen.com">Tea Leaf Green</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>&copy; 1999 Andy Gadiel</span>
+    <span>Built with the <a href="https://www.jambase.com">JamBase</a> brand system.</span>
+  </footer>
 </div>
-
-<!--div class="links">
-    <a href="https://gadiel.com/phish">Phish</a>
-    <a href="https://jambase.com">JamBase</a>
-    <a href="https://headcount.org">HeadCount</a>
-    <a href="https://rexfoundation.org">Rex Foundation</a>
-    <a href="https://tealeafgreen.com">Tea Leaf Green</a>
-    <a href="https://percybot.com">PercyBot</a>
-    <a href="https://couchtour.tv">Couchtour.tv</a>
-    <a href="https://golive.ly">Lively</a>
-</div-->
-
-<div class="socials">  
-  <a href="https://www.linkedin.com/in/andygadiel/">LinkedIn</a>
-  <a href="https://twitter.com/andygadiel">Twitter</a>
-  <a href="https://instagram.com/andygadiel">Instagram</a> 
-
-  <div id="spacer" style="width: 200px; height: 25px; margin-right:0px;"></div>
-  <a href="https://golive.ly">Lively</a>
-  <a href="https://couchtour.tv">Couchtour.tv</a>
-  <a href="https://percybot.com">PercyBot</a>
-  
-  <div id="spacer" style="width: 200px; height: 25px; margin-right:0px;"></div>
-  <a href="https://headcount.org">HeadCount</a>
-  <a href="https://rexfoundation.org">Rex Foundation</a>
-  
-  <div id="spacer" style="width: 200px; height: 25px; margin-right:0px;"></div>
-  <a href="https://www.jambase.com">JamBase</a>
-  <a href="phish/">Phish</a>
-  <a href="kvhw">KVHW</a>
-  <a href="https://tealeafgreen.com">Tea Leaf Green</a>
-  
-</div>
-
-
 </body>
 </html>
