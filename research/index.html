@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>JamBase Live Music Research Assistant</title>
+  <meta name="description" content="Research live music — concerts, festivals, artists and venues — powered by the JamBase Data API." />
+  <meta property="og:title" content="JamBase Live Music Research Assistant" />
+  <link rel="icon" href="../favicon.ico" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <span class="pulse"></span>
+        <span>Live Music Research <small>· powered by <b>JamBase</b></small></span>
+      </div>
+      <div class="spacer"></div>
+      <span id="keyPill" class="key-pill"><span class="dot"></span><span id="keyPillText">No key</span></span>
+      <button class="btn small" id="settingsBtn">⚙ Settings</button>
+    </div>
+  </header>
+
+  <main class="app">
+    <section class="hero">
+      <h1>What do you want to research?</h1>
+      <p>Search the live music universe — upcoming concerts &amp; festivals by city and date,
+         an artist's full tour itinerary, or any venue's calendar.</p>
+    </section>
+
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-tab="events">🎫 Events</button>
+      <button class="tab" data-tab="artists">🎤 Artists</button>
+      <button class="tab" data-tab="venues">📍 Venues</button>
+    </nav>
+
+    <!-- EVENTS -->
+    <section class="view" id="view-events">
+      <div class="filters">
+        <div class="filter-grid">
+          <div class="field">
+            <label for="ev-location">City / location</label>
+            <input id="ev-location" type="text" placeholder="e.g. San Francisco, CA" />
+          </div>
+          <div class="field">
+            <label for="ev-from">From date</label>
+            <input id="ev-from" type="date" />
+          </div>
+          <div class="field">
+            <label for="ev-to">To date</label>
+            <input id="ev-to" type="date" />
+          </div>
+          <div class="field">
+            <label for="ev-genre">Genre</label>
+            <select id="ev-genre"><option value="">Any genre</option></select>
+          </div>
+          <div class="field">
+            <label for="ev-type">Type</label>
+            <select id="ev-type">
+              <option value="">Concerts &amp; festivals</option>
+              <option value="concerts">Concerts</option>
+              <option value="festivals">Festivals</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="ev-artist">Artist contains</label>
+            <input id="ev-artist" type="text" placeholder="e.g. Phish" />
+          </div>
+        </div>
+        <div class="filter-actions">
+          <button class="btn primary" id="ev-search">Search events</button>
+          <span class="hint">Defaults to the next 90 days from today.</span>
+        </div>
+      </div>
+      <div id="ev-results"></div>
+    </section>
+
+    <!-- ARTISTS -->
+    <section class="view hidden" id="view-artists">
+      <div class="filters">
+        <div class="filter-grid">
+          <div class="field">
+            <label for="ar-name">Artist name</label>
+            <input id="ar-name" type="text" placeholder="e.g. Goose" />
+          </div>
+          <div class="field">
+            <label for="ar-genre">Genre</label>
+            <select id="ar-genre"><option value="">Any genre</option></select>
+          </div>
+        </div>
+        <div class="filter-actions">
+          <button class="btn primary" id="ar-search">Search artists</button>
+          <span class="hint">Click an artist for their tour itinerary &amp; news.</span>
+        </div>
+      </div>
+      <div id="ar-results"></div>
+    </section>
+
+    <!-- VENUES -->
+    <section class="view hidden" id="view-venues">
+      <div class="filters">
+        <div class="filter-grid">
+          <div class="field">
+            <label for="ve-name">Venue name</label>
+            <input id="ve-name" type="text" placeholder="e.g. Red Rocks" />
+          </div>
+          <div class="field">
+            <label for="ve-location">City / location</label>
+            <input id="ve-location" type="text" placeholder="e.g. Denver, CO" />
+          </div>
+        </div>
+        <div class="filter-actions">
+          <button class="btn primary" id="ve-search">Search venues</button>
+          <span class="hint">Click a venue to see its upcoming calendar.</span>
+        </div>
+      </div>
+      <div id="ve-results"></div>
+    </section>
+
+    <footer class="foot">
+      Data from <a href="https://www.jambase.com" target="_blank" rel="noopener">JamBase</a>.
+      Your API key stays in this browser (localStorage) — it is never sent anywhere except JamBase.
+    </footer>
+  </main>
+
+  <!-- Settings modal -->
+  <div class="modal-backdrop hidden" id="settingsModal">
+    <div class="modal">
+      <h2>Settings</h2>
+      <p class="sub">Connect your JamBase Data API key to start researching.</p>
+      <div class="field">
+        <label for="set-key">JamBase API key</label>
+        <div class="input-wrap">
+          <input id="set-key" type="password" placeholder="Paste your apikey" autocomplete="off" />
+          <button type="button" class="reveal" id="revealKey">show</button>
+        </div>
+      </div>
+      <div class="field">
+        <label for="set-base">API base URL</label>
+        <input id="set-base" type="text" />
+      </div>
+      <div class="note">
+        🔒 <b>Where your key lives:</b> only in this browser's <code>localStorage</code> on this device.
+        It's sent directly to the JamBase API and never to gadiel.com or any third party.
+        Clear it anytime with “Forget key”.
+      </div>
+      <div class="modal-actions">
+        <button class="btn ghost" id="forgetKey">Forget key</button>
+        <button class="btn ghost" id="closeSettings">Cancel</button>
+        <button class="btn primary" id="saveSettings">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Request inspector -->
+  <div class="inspector" id="inspector">
+    <div class="bar" id="inspectorBar">
+      <span class="status-dot" id="insDot"></span>
+      <span>Request Inspector</span>
+      <code id="insUrlPreview">— no request yet —</code>
+      <div class="spacer"></div>
+      <span id="insToggle">▲</span>
+    </div>
+    <div class="panel">
+      <h4>Request URL (key redacted)</h4>
+      <pre class="url-line" id="insUrl">—</pre>
+      <h4>Status</h4>
+      <pre id="insStatus">—</pre>
+      <h4>Raw response</h4>
+      <pre id="insBody">—</pre>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
