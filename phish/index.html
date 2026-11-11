@@ -24,6 +24,17 @@
 			0% { transform: rotateX(0deg) rotateY(0deg); }
 			100% { transform: rotateX(360deg) rotateY(360deg); }
 		}
+		#pnetsetlist { max-width: 800px; margin: 0 auto; padding: 4px 8px; box-sizing: border-box; text-align: left; line-height: 1.45; }
+		#pnetsetlist h3 { margin: 2px 0 0; font-size: 20px; }
+		#pnetsetlist .pnetloc { color: #555; margin-bottom: 10px; }
+		#pnetsetlist .pnetsl { margin: 0 0 6px; }
+		#pnetsetlist .pnetsn { font-size: 12px; color: #555; margin-top: 10px; }
+		#pnetsetlist .pnetsn p { margin: 0; }
+		#pnetsetlist .pnetmore { font-size: 13px; margin: 10px 0 0; }
+		@media (max-width: 600px) {
+			#pnetsetlist h3 { font-size: 18px; }
+			#pnetsetlist .pnetmore a { display: inline-block; padding: 4px 0; }
+		}
 	</style>
 	
 </head>
@@ -168,24 +179,23 @@ This site voluntarily complies with the Phish fan web site policy at <a href="ht
 	function render(songs) {
 		var first = songs[0];
 		var d = first.showdate.split("-");
-		var out = "<b>Last Show:</b>" +
-			"<h3>" + d[1] + "/" + d[2] + "/" + d[0] +
-			' <a href="' + esc(first.permalink) + '">' + esc(first.venue) + "</a> &middot; " +
-			esc(first.city + ", " + (first.state || first.country)) + "</h3>";
+		var out = "<h3>" + d[1] + "/" + d[2] + "/" + d[0] +
+			' &middot; <a href="' + esc(first.permalink) + '">' + esc(first.venue) + "</a></h3>" +
+			'<div class="pnetloc">' + esc(first.city + ", " + (first.state || first.country)) + "</div>";
 		var sets = [];
 		songs.forEach(function (r, i) {
 			var last = sets[sets.length - 1];
 			if (!last || last.set !== r.set) { last = { set: r.set, html: [] }; sets.push(last); }
 			var lastOfSet = i === songs.length - 1 || songs[i + 1].set !== r.set;
-			last.html.push(esc(r.song) + (lastOfSet ? "" : esc(r.trans_mark || "")));
+			last.html.push(esc(r.song) + (lastOfSet ? "" : esc(r.trans_mark || "").replace("-&gt;", "-&#8288;&gt;")));
 		});
-		out += '<p class="pnetsl">' + sets.map(function (s) {
-			return "<b>" + setLabel(s.set) + ":</b> " + s.html.join("");
-		}).join("<br>") + "</p>";
+		out += sets.map(function (s) {
+			return '<p class="pnetsl"><b>' + setLabel(s.set) + ":</b> " + s.html.join("") + "</p>";
+		}).join("");
 		if (first.setlistnotes) {
-			out += '<div class="pnetsn" style="font-size:10px; max-width:800px;">' + first.setlistnotes + "</div>";
+			out += '<div class="pnetsn">' + first.setlistnotes + "</div>";
 		}
-		out += '<p style="font-size:12px;">More at Phish.net: ' +
+		out += '<p class="pnetmore">More at Phish.net: ' +
 			'<a href="' + esc(first.permalink) + '">Full setlist &amp; notes</a> :: ' +
 			'<a href="https://phish.net/setlists/">Recent setlists</a> :: ' +
 			'<a href="https://phish.net/">Phish.net</a></p>';
