@@ -25,6 +25,7 @@
 			100% { transform: rotateX(360deg) rotateY(360deg); }
 		}
 		#pnetsetlist { max-width: 800px; margin: 0 auto; padding: 4px 8px; box-sizing: border-box; text-align: left; line-height: 1.45; }
+		#pnetsetlist .pnetband { font-weight: bold; color: #555; }
 		#pnetsetlist h3 { margin: 2px 0 0; font-size: 20px; }
 		#pnetsetlist .pnetloc { color: #555; margin-bottom: 10px; }
 		#pnetsetlist .pnetsl { margin: 0 0 6px; }
@@ -200,7 +201,9 @@ This site voluntarily complies with the Phish fan web site policy at <a href="ht
 	function render(songs) {
 		var first = songs[0];
 		var d = first.showdate.split("-");
-		var out = "<h3>" + d[1] + "/" + d[2] + "/" + d[0] +
+		var band = first.artistid === 1 ? "" : (first.meta || first.artist_name);
+		var out = (band ? '<div class="pnetband">' + esc(band) + "</div>" : "") +
+			"<h3>" + d[1] + "/" + d[2] + "/" + d[0] +
 			' &middot; <a href="' + esc(first.permalink) + '">' + esc(first.venue) + "</a></h3>" +
 			'<div class="pnetloc">' + esc(first.city + ", " + (first.state || first.country)) + "</div>";
 		var sets = [];

@@ -1,12 +1,15 @@
 // Proxy for the Phish.net v5 API, deployed as an AWS Lambda Function URL.
 // The Function URL config handles the CORS headers. This code exposes a single
 // fixed route, GET /latest, which returns the setlist rows for the most recent
-// Phish show. The API key is sent server-side in the X-API-KEY header and is
-// never reachable for arbitrary endpoints.
+// show by Phish or a band member's project. The API key is sent server-side in
+// the X-API-KEY header and is never reachable for arbitrary endpoints.
 
 const API = "https://api.phish.net/v5";
 const USER_AGENT = "gadiel.com/1.0 (andygadiel@gmail.com)";
 const CACHE_MS = 5 * 60 * 1000;
+// Phish.net artist ids: Phish, Trey Anastasio, Mike Gordon, Jon Fishman, Page McConnell.
+// -1 ("Guest Appearance") is other bands' shows and is deliberately excluded.
+const ARTIST_IDS = new Set([1, 2, 6, 7, 9]);
 
 let cache = { at: 0, body: null };
 
@@ -24,7 +27,8 @@ async function phishnet(path) {
 }
 
 async function latestShow() {
-  const [row] = await phishnet("setlists/artistid/1.json?order_by=showdate&direction=desc&limit=1");
+  const recent = await phishnet("setlists.json?order_by=showdate&direction=desc&limit=200");
+  const row = recent.find((r) => ARTIST_IDS.has(r.artistid));
   if (!row) return [];
   const rows = await phishnet(`setlists/showid/${row.showid}.json`);
   return rows.sort((a, b) => a.position - b.position);
