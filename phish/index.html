@@ -31,7 +31,12 @@
 		#pnetsetlist .pnetsn { font-size: 12px; color: #555; margin-top: 10px; }
 		#pnetsetlist .pnetsn p { margin: 0; }
 		#pnetsetlist .pnetmore { font-size: 13px; margin: 10px 0 0; }
+		#stern { max-width: 800px; margin: 0 auto; padding: 0 8px; box-sizing: border-box; }
+		#stern h3 { margin: 6px 0 10px; }
+		#stern .clips { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+		#stern iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; }
 		@media (max-width: 600px) {
+			#stern .clips { grid-template-columns: 1fr; }
 			#pnetsetlist h3 { font-size: 18px; }
 			#pnetsetlist .pnetmore a { display: inline-block; padding: 4px 0; }
 		}
@@ -87,6 +92,17 @@
 </script>
 </div>
 <!-- End JamBase Widget -->
+
+<hr noshade color="#cccccc" style="border-top: dotted 1px;" />
+<div id="stern">
+	<h3>Trey on <a href="https://www.youtube.com/@howardstern">The Howard Stern Show</a> &middot; 11/2/26</h3>
+	<div class="clips">
+		<iframe src="https://www.youtube-nocookie.com/embed/KRUPahSMoOo" title="Loving Cup" loading="lazy" allowfullscreen></iframe>
+		<iframe src="https://www.youtube-nocookie.com/embed/C-1AlyNFr90" title="Pebbles and Marbles" loading="lazy" allowfullscreen></iframe>
+		<iframe src="https://www.youtube-nocookie.com/embed/d0LxWaB41eY" title="Stash" loading="lazy" allowfullscreen></iframe>
+		<iframe src="https://www.youtube-nocookie.com/embed/R9SPfM4U6qE" title="On playing Down by the River with Neil Young" loading="lazy" allowfullscreen></iframe>
+	</div>
+</div>
 
 
 
